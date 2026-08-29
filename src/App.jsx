@@ -1,8 +1,8 @@
 import './App.css'
-import MyFooter from './components/MyFooter/MyFooter'
-import MyNav from './components/MyNav/MyNav'
-import Welcome from './components/Welcome/Welcome'
-import AllTheBooks from './components/AllTheBooks/AllTheBooks'
+import MyFooter from './components/myFooter/MyFooter'
+import MyNav from './components/myNav/MyNav'
+import Welcome from './components/welcome/Welcome'
+import AllTheBooks from './components/allTheBooks/AllTheBooks'
 
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
     <>
       <MyNav />
       <Welcome />
-      <AllTheBooks/>
+      <AllTheBooks />
       <MyFooter />
     </>
   )

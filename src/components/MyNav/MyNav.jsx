@@ -5,7 +5,7 @@ import { Library } from 'lucide-react';
 
 const MyNav = () => {
     return (
-        <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar expand="lg" className="bg-info">
             <Container>
                 <Library className='me-2' />
                 <Navbar.Brand href="#home">EpiBooks</Navbar.Brand>

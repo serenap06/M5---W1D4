@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import books from '../../data/fantasy.json';
-import SingleBook from '../SingleBook/SingleBook';
+import SingleBook from '../singleBook/SingleBook';
 import { Container, Row, Col, Alert } from 'react-bootstrap';
-import { Search } from 'lucide-react';
+import SearchBar from '../searchBar/SearchBar';
+
 
 
 const AllTheBooks = () => {
@@ -13,6 +14,9 @@ const AllTheBooks = () => {
 
     console.log(booksData)
     // evento  
+
+
+
     const onChangeInput = (e) => {
         const value = e.target.value
         setInputData(value)
@@ -36,27 +40,11 @@ const AllTheBooks = () => {
     console.log(inputData)
     return (
         <Container>
-            {/*Row Barra di Ricerca*/}
-            <Row>
-                <Col>
-                    <form
-                        className='my-2 text-end'
-                    >
-                        <input
-                            value={inputData}
-                            onChange={onChangeInput}
-                            type="text"
-                            placeholder='Cerca il tuo libro...'
-                        />
-                        <button
-                            onClick={onSearch}
-                            className='btn btn-info'>
-                            <Search />
-                        </button>
-                    </form>
-                </Col>
-            </Row>
-
+            <SearchBar
+                inputData={inputData}
+                onChangeInput={onChangeInput}
+                onSearch={onSearch}
+            />
             {/*Row Griglia Libri*/}
             <Row className='g-4'>
                 {isSearchEmpty && (
