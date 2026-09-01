@@ -1,17 +1,19 @@
-import { useState } from 'react';
-import books from '../../data/fantasy.json';
+import { useContext, useState } from 'react';
 import SingleBook from '../singleBook/SingleBook';
 import { Container, Row, Col, Alert } from 'react-bootstrap';
 import SearchBar from '../searchBar/SearchBar';
+import { BooksContext } from '../../contexts/BooksContext';
+import books from '../../data/fantasy.json'
 
 
 
 const AllTheBooks = () => {
+    const {booksData, setBooksData}=useContext(BooksContext)
+
     // stato dell'input
     const [inputData, setInputData] = useState('')
-    const [booksData, setBooksData] = useState(books)
     const [isSearchEmpty, setIsSearchEmpty] = useState(false)
-
+    
     console.log(booksData)
     // evento  
 
@@ -52,9 +54,9 @@ const AllTheBooks = () => {
                         Non ci sono libri che corrispondono alla tua ricerca
                     </Alert>
                 )}
-                {!isSearchEmpty && booksData.map((book) =>
+                {!isSearchEmpty && booksData.map((book,index) =>
                     <Col
-                        key={book.asin}
+                        key={`${book.asin}-${index}`}
                         xs={12} md={4} lg={3} xl={2}
                     >
                         <SingleBook book={book} />

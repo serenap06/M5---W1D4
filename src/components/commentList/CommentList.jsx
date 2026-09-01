@@ -1,10 +1,13 @@
 import { Modal } from "react-bootstrap";
 import SingleComment from "../singleComment/SingleComment";
 import AddComment from "../addComment/AddComment";
+import { useContext } from "react";
+import { CommentsContext } from "../../contexts/CommentsContext";
 
 
 
-const CommentList = ({ comments, getComments, show, onHide, asin }) => {
+const CommentList = ({ show, onHide, asin }) => {
+    const {comments} = useContext(CommentsContext)
     return (
         <Modal show={show} onHide={onHide}
             size='lg' 
@@ -31,14 +34,13 @@ const CommentList = ({ comments, getComments, show, onHide, asin }) => {
                                 rate={comment.rate}
                                 author={comment.author}
                                 id={comment._id}
-                                getComments={getComments}
+                                asin={comment.elementId}
                             />
                         ))
                     )}
                 </Modal.Body>
                 <Modal.Footer className="w-100">
                     <AddComment
-                        getComments={getComments}
                         asin={asin} 
                         onHide={onHide}/>
                 </Modal.Footer>

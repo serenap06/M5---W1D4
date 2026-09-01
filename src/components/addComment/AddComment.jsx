@@ -1,7 +1,9 @@
 import { Form, Button } from "react-bootstrap"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { CommentsContext } from "../../contexts/CommentsContext"
 
-const AddComment = ({ asin, getComments}) => {
+const AddComment = ({ asin}) => {
+    const {getComments}=useContext(CommentsContext)
     const [inputComment, setInputComment] = useState({
         comment: '',
         rate: '',
@@ -33,7 +35,7 @@ const AddComment = ({ asin, getComments}) => {
         } catch (error) {
             console.log(error)
         } finally {
-            getComments()
+            getComments(asin)
         }
     }
 
