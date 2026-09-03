@@ -1,27 +1,37 @@
-import { Row, Col,Button } from "react-bootstrap";
+import { Form, Button, InputGroup, Row, Col } from 'react-bootstrap';
 import { Search } from 'lucide-react';
+import { useContext } from "react";
+import { SearchBookContext } from "../../contexts/SearchBookContext";
+import { ThemeContext } from '../../contexts/ThemeContext';
 
-const SearchBar =({inputData,onChangeInput,onSearch})=>{
-    return( 
+const SearchBar = () => {
+    const { inputData, onChangeInput, onSearch } = useContext(SearchBookContext)
+    const { isDark } = useContext(ThemeContext)
+    return (
+
+        <Form
+            onSubmit={onSearch}
+        >
             <Row>
-                <Col>
-                    <form
-                        className='my-2 d-flex justify-content-end align-items-center gap-2' onSubmit={onSearch}
-                    >
-                        <input
-                            value={inputData}
-                            onChange={onChangeInput}
-                            type="text"
-                            placeholder='Cerca il tuo libro...'
-                        />
-                        <Button
-                            onClick={onSearch}
-                            className='btn btn-info'>
-                            <Search />
-                        </Button>
-                    </form>
+                <Col xs='auto' >
+                    <Form.Control
+                        value={inputData}
+                        onChange={onChangeInput}
+                        type="text"
+                        placeholder='Cerca il tuo libro...'
+                    />
+                </Col>
+                <Col xs='auto'>
+                    <Button
+                        variant={isDark ? 'dark' : 'info'}
+                        onClick={onSearch}
+                        className='btn d-flex px-0'>
+                        <Search />
+                    </Button>
                 </Col>
             </Row>
-     )
+        </Form>
+
+    )
 }
 export default SearchBar;

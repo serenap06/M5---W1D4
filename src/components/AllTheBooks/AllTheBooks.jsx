@@ -1,69 +1,57 @@
 import { useContext, useState } from 'react';
 import SingleBook from '../singleBook/SingleBook';
-import { Container, Row, Col, Alert } from 'react-bootstrap';
-import SearchBar from '../searchBar/SearchBar';
+import { Container, Row, Col, Alert, Button } from 'react-bootstrap';
 import { BooksContext } from '../../contexts/BooksContext';
 import books from '../../data/fantasy.json'
-
-
+import { SearchBookContext } from '../../contexts/SearchBookContext';
+import { ThemeContext } from '../../contexts/ThemeContext'
 
 const AllTheBooks = () => {
-    const {booksData, setBooksData}=useContext(BooksContext)
+    const { booksData, setBooksData } = useContext(BooksContext)
+    const { isSearchEmpty } = useContext(SearchBookContext)
+    const { isDark } = useContext(ThemeContext)
 
-    // stato dell'input
-    const [inputData, setInputData] = useState('')
-    const [isSearchEmpty, setIsSearchEmpty] = useState(false)
-    
-    console.log(booksData)
-    // evento  
+    const [limit, setLimit] = useState(12)
 
-
-
-    const onChangeInput = (e) => {
-        const value = e.target.value
-        setInputData(value)
-        if (value === '') {
-            setBooksData(books)
-            setIsSearchEmpty(false)
-        }
+    const showMore = () => {
+        setLimit((prevLimit) => prevLimit + 12) //uso un parametro e non limit+12 per evitare errori con i click del pulsante
     }
-    const onSearch = (e) => {
-        e.preventDefault()
-        setIsSearchEmpty(false)
-        const filtered = books.filter(singleBook =>
-            singleBook.title.toLowerCase().includes(inputData.toLowerCase())
-        )
-        if (filtered.length === 0) {
-            setIsSearchEmpty(true)
-        }
-        setBooksData(filtered)
-    }
-    //markup
-    console.log(inputData)
+
     return (
-        <Container>
-            <SearchBar
-                inputData={inputData}
-                onChangeInput={onChangeInput}
-                onSearch={onSearch}
-            />
-            {/*Row Griglia Libri*/}
-            <Row className='g-4'>
-                {isSearchEmpty && (
-                    <Alert variant='warning'>
-                        Non ci sono libri che corrispondono alla tua ricerca
-                    </Alert>
-                )}
-                {!isSearchEmpty && booksData.map((book,index) =>
-                    <Col
-                        key={`${book.asin}-${index}`}
-                        xs={12} md={4} lg={3} xl={2}
-                    >
-                        <SingleBook book={book} />
-                    </Col>
-                )}
-            </Row>
-        </Container>
+        <div
+            className={isDark ? 'bg-dark' : 'bg-white'}>
+            <Container>
+                {/*Row Griglia Libri*/}
+                <Row className='g-4'>
+                    {isSearchEmpty && (
+                        <Alert variant='warning'>
+                            Non ci sono libri che corrispondono alla tua ricerca
+                        </Alert>
+                    )}
+                    {!isSearchEmpty && booksData.slice(0, limit).map((book, index) =>
+                        <Col
+                            key={`${book.asin}-${index}`}
+                            xs={12} md={4} lg={3} xl={2}
+                        >
+                            <SingleBook book={book} />
+                        </Col>
+                    )}
+                </Row>
+                <Row>
+                        <Col className='text-center g-4'>
+                            {limit < booksData.length && (
+                                <Button
+                                    type='button'
+                                    variant={isDark ? 'outline-light' : 'info'}
+                                    onClick={showMore}
+                                >
+                                    Mostra altri libri
+                                </Button>)
+                            }
+                        </Col>
+                    </Row>
+            </Container>
+        </div>
     )
 }
 export default AllTheBooks;

@@ -1,9 +1,13 @@
 import { Form, Button } from "react-bootstrap"
 import { useContext, useState } from "react"
 import { CommentsContext } from "../../contexts/CommentsContext"
+import { ThemeContext } from "../../contexts/ThemeContext"
 
-const AddComment = ({ asin}) => {
-    const {getComments}=useContext(CommentsContext)
+const AddComment = ({ asin }) => {
+    const { getComments } = useContext(CommentsContext)
+    const { isDark } = useContext(ThemeContext)
+
+    const [isSent, setIsSent] = useState(false)
     const [inputComment, setInputComment] = useState({
         comment: '',
         rate: '',
@@ -36,6 +40,7 @@ const AddComment = ({ asin}) => {
             console.log(error)
         } finally {
             getComments(asin)
+            setIsSent(!isSent)
         }
     }
 
@@ -61,14 +66,15 @@ const AddComment = ({ asin}) => {
                     min='1'
                     max='5'
                     name='rate'></Form.Control>
-                    <Button
-                type="submit"
-                className="mt-2 w-100 text-white fw-bold"
-                variant='info'>Invia commento</Button>
+                <Button
+                    type="submit"
+                    className={`mt-2 w-100 fw-bold ${!isDark? 'text-white':''}`}
+                    variant={isSent ? 'success' : (isDark? 'light' : 'info')}>
+                    {isSent ? 'Commento inviato' : 'Invia commento'}
+                </Button>
             </Form.Group>
-            
+
         </Form>
     )
 }
-
 export default AddComment;

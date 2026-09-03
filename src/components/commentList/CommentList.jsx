@@ -3,16 +3,19 @@ import SingleComment from "../singleComment/SingleComment";
 import AddComment from "../addComment/AddComment";
 import { useContext } from "react";
 import { CommentsContext } from "../../contexts/CommentsContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 
 
 const CommentList = ({ show, onHide, asin }) => {
+    const {isDark} = useContext(ThemeContext)
     const {comments} = useContext(CommentsContext)
     return (
         <Modal show={show} onHide={onHide}
             size='lg' 
             centered
             scrollable
+            data-bs-theme={isDark? 'dark' : 'light'}
         >
             <Modal.Dialog
             className="w-100 d-flex align-self-center" 
