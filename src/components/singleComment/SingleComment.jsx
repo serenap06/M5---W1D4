@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { CommentsContext } from "../../contexts/CommentsContext";
 
 const SingleComment = ({comment, asin, rate, author, id}) => {
+const {getComments,comments} = useContext(CommentsContext)
 
     const deleteComment = async () => {
         const apiToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTYyNGU5OTIxMDU5ZjAwMTVlMjNhMGEiLCJpYXQiOjE3ODc4NjQ4NzYsImV4cCI6MTc4OTA3NDQ3Nn0.WEUhGu9DJdR0VKRF1JA8tvApR-XiF4ix-aRy_lDuoAc`
