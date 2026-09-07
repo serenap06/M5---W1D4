@@ -1,5 +1,5 @@
 import { Form, Button } from "react-bootstrap"
-import { useContext, useState } from "react"
+import { useContext, useState, useEffect } from "react"
 import { CommentsContext } from "../../contexts/CommentsContext"
 import { ThemeContext } from "../../contexts/ThemeContext"
 
@@ -10,18 +10,24 @@ const AddComment = ({ asin }) => {
     const [isSent, setIsSent] = useState(false)
     const [inputComment, setInputComment] = useState({
         comment: '',
-        rate: '',
-        elementId: `${asin}`
+        rate: ''
     })
-    console.log(inputComment.elementId)
+    console.log('InputComment', inputComment)
 
     const onChangeInput = (e) => {
         const { name, value } = e.target
         setInputComment({
-            ...inputComment,
+            ...inputComment, 
+            elementId: `${asin}`,
             [name]: value
         })
     }
+    useEffect(()=>{
+        setInputComment({
+            comment:'',
+            rate:''
+        })
+    },[asin])
 
     const onSubmitComment = async (e) => {
         e.preventDefault()
@@ -41,6 +47,10 @@ const AddComment = ({ asin }) => {
         } finally {
             getComments(asin)
             setIsSent(!isSent)
+            setInputComment({
+            comment:'',
+            rate:''
+        })
         }
     }
 

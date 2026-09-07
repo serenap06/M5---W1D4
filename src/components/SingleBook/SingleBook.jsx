@@ -5,24 +5,21 @@ import CommentArea from "../commentArea/CommentArea";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 // dichiarare componente
-const SingleBook = ({ book }) => {
+const SingleBook = ({ book , showComments, asinIsSelected}) => {
     const { isDark } = useContext(ThemeContext)
-    const [isSelected, setIsSelected] = useState(false)
-    const [isRed, setIsRed] = useState(false)
+    const isSelected = asinIsSelected === book.asin
 
-    const onClickRed = () => {
-        setIsRed(!isRed)
+    const handleBookClick = ()=>{
+        showComments(book)
     }
-    const toggleModal = () => {
-        setIsSelected(!isSelected)
-    }
+
     return (
         <div className="h-100">
             <Card
                 bg={isDark ? 'dark' : 'white'}
-                onClick={onClickRed}
-                className={`h-100 d-flex flex-column justify-content-between ${isRed ? 'border-4' : ''}`}
-                border={isRed ? 'danger' : isDark ? 'light' : ''}
+                onClick={handleBookClick}
+                className={`h-100 d-flex flex-column justify-content-between ${isSelected ? 'border-4' : ''}`}
+                border={isSelected ? 'danger' : isDark ? 'light' : ''}
                 text={isDark ? 'light' : ''}
             >
 
@@ -52,21 +49,7 @@ const SingleBook = ({ book }) => {
                         {book.asin}
                     </Card.Text>
                 </Card.Body>
-                <CardFooter className="d-flex flex-column justify-content-between ps-2">
-                    <Button
-                        text={isDark ? 'dark' : ''}
-                        onClick={toggleModal}
-                        variant={isDark ? 'light' : 'info'}
-                    >
-                        Recensioni
-                    </Button>
-                </CardFooter>
             </Card>
-
-            {isSelected && (<CommentArea
-                asin={book.asin}
-                show={isSelected}
-                onHide={() => setIsSelected(false)} />)}
 
         </div>
     )

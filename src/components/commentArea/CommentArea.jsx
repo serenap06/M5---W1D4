@@ -5,7 +5,7 @@ import { Badge } from "react-bootstrap"
 import AddComment from "../addComment/AddComment"
 import { CommentsContext } from "../../contexts/CommentsContext"
 //dichiara
-const CommentArea = ({ asin, show, onHide }) => {
+const CommentArea = ({ asinIsSelected }) => {
     //stato
     const {getComments} = useContext(CommentsContext)
 
@@ -13,20 +13,21 @@ const CommentArea = ({ asin, show, onHide }) => {
     
     //useEffect 
     useEffect(() => {
-        if (show && asin) {
-            getComments(asin)
+        if (asinIsSelected) {
+            getComments(asinIsSelected)
         }
-    }, [asin, show])
+    }, [asinIsSelected])
     //markup
+
+    console.log('CommentArea', asinIsSelected)
 
     return (
         <>
             <CommentList
-                asin = {asin}
-                show={show}
-                onHide={onHide}
+                asin = {asinIsSelected}
             />
-
+            <AddComment
+            asin ={asinIsSelected}/>
         </>
     )
 }
