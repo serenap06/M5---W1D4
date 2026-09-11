@@ -1,7 +1,6 @@
 //importa
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import CommentList from "../commentList/CommentList"
-import { Badge } from "react-bootstrap"
 import AddComment from "../addComment/AddComment"
 import { CommentsContext } from "../../contexts/CommentsContext"
 //dichiara
@@ -19,11 +18,10 @@ const CommentArea = ({ asinIsSelected }) => {
     }, [asinIsSelected])
     //markup
 
-    console.log('CommentArea', asinIsSelected)
-
     return (
         <>
             <CommentList
+                data-testid="CommentTest"
                 asin = {asinIsSelected}
             />
             <AddComment

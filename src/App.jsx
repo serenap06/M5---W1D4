@@ -1,30 +1,42 @@
-import './App.css'
-import MyFooter from './components/myFooter/MyFooter'
-import MyNav from './components/myNav/MyNav'
-import Welcome from './components/welcome/Welcome'
-import AllTheBooks from './components/allTheBooks/AllTheBooks'
-import { BooksProvider } from './contexts/BooksContext'
-import { CommentsProvider } from './contexts/CommentsContext'
-import { SearchBookProvider } from './contexts/SearchBookContext'
-import { ThemeProvider } from './contexts/ThemeContext'
-
-
+import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router';
+import HomePage from './components/pages/homePage/HomePage';
+import NotFound from './components/pages/notFound/NotFound';
+import BookDetail from './components/pages/bookDetail/BookDetail';
+import { BooksProvider } from './contexts/BooksContext';
+import { CommentsProvider } from './contexts/CommentsContext';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { SearchBookProvider } from './contexts/SearchBookContext';
 function App() {
 
   return (
-    <BooksProvider>
-      <SearchBookProvider>
+    <>
+      <BooksProvider>
         <ThemeProvider>
-          <MyNav />
-          <Welcome />
           <CommentsProvider>
-            <AllTheBooks />
+            <SearchBookProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route
+                    index
+                    element={<HomePage />}
+                  />
+                  <Route
+                    path='/:asin'
+                    element={<BookDetail />}
+                  />
+                  <Route
+                    path='*'
+                    element={<NotFound />}
+                  />
+                </Routes>
+              </BrowserRouter>
+            </SearchBookProvider >
           </CommentsProvider>
-          <MyFooter />
         </ThemeProvider>
-      </SearchBookProvider>
-    </BooksProvider>
-  )
+      </BooksProvider>
+      </>
+      )
 }
 
-export default App
+      export default App

@@ -2,7 +2,6 @@ import { useContext, useState } from 'react';
 import SingleBook from '../singleBook/SingleBook';
 import { Container, Row, Col, Alert, Button } from 'react-bootstrap';
 import { BooksContext } from '../../contexts/BooksContext';
-import books from '../../data/fantasy.json'
 import { SearchBookContext } from '../../contexts/SearchBookContext';
 import { ThemeContext } from '../../contexts/ThemeContext'
 import CommentArea from '../commentArea/CommentArea';
@@ -21,8 +20,6 @@ const AllTheBooks = () => {
         }
 
     }
-    console.log(isSelected)
-
     const [limit, setLimit] = useState(12)
 
     const showMore = () => {
@@ -49,7 +46,8 @@ const AllTheBooks = () => {
                                 >
                                     <SingleBook book={book}
                                         showComments={showComments}
-                                        asinIsSelected={isSelected} />
+                                        asinIsSelected={isSelected} 
+                                        />
                                 </Col>
                             )}
                         </Row>

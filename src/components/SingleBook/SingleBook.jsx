@@ -1,26 +1,34 @@
-// importare
-import { useContext, useState } from "react";
-import { Badge, Card, Button, CardFooter } from "react-bootstrap";
-import CommentArea from "../commentArea/CommentArea";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { Badge, Card, Button } from "react-bootstrap";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 // dichiarare componente
-const SingleBook = ({ book , showComments, asinIsSelected}) => {
+const SingleBook = ({ book, showComments, asinIsSelected, isDetail=false }) => {
     const { isDark } = useContext(ThemeContext)
     const isSelected = asinIsSelected === book.asin
 
-    const handleBookClick = ()=>{
+    const navigate = useNavigate()
+
+    const detailBook = () => {
+        navigate(`/${book.asin}`)
+    }
+
+    const handleBookClick = () => {
         showComments(book)
     }
 
     return (
-        <div className="h-100">
+        <div className="h-100"
+        
+        >
             <Card
                 bg={isDark ? 'dark' : 'white'}
                 onClick={handleBookClick}
                 className={`h-100 d-flex flex-column justify-content-between ${isSelected ? 'border-4' : ''}`}
                 border={isSelected ? 'danger' : isDark ? 'light' : ''}
                 text={isDark ? 'light' : ''}
+                data-testid="BookCard"
             >
 
                 <Card.Img
@@ -48,6 +56,13 @@ const SingleBook = ({ book , showComments, asinIsSelected}) => {
                             text={isDark ? 'dark' : ''}>Codice Asin</Badge><br />
                         {book.asin}
                     </Card.Text>
+                    {!isDetail && <Button
+                        className='btn btn-info'
+                        onClick={detailBook}
+                        
+                    >
+                        Dettagli
+                    </Button>}
                 </Card.Body>
             </Card>
 
