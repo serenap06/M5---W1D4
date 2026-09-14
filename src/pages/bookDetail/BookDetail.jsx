@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import SingleBook from "./../../singleBook/SingleBook";
-import CommentArea from "./../../commentArea/CommentArea";
-import MyNav from "./../../myNav/MyNav";
-import MyFooter from "./../../myFooter/MyFooter";
+import SingleBook from "./../../components/singleBook/SingleBook"
+import CommentArea from "./../../components/commentArea/CommentArea";
+import MyNav from "./../../components/myNav/MyNav";
+import MyFooter from "./../../components/myFooter/MyFooter";
 import { Row, Col } from "react-bootstrap";
 
 const BookDetail = () => {

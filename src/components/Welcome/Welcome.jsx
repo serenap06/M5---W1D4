@@ -9,7 +9,7 @@ const Welcome = () => {
     return (
             <div className={isDark ? 'bg-dark' : 'bg-info'}>
                 <Col >
-                    <Alert className="text-center fs-5" 
+                    <Alert className="text-center fs-5 mb-0" 
                     variant={isDark? 'dark' : 'info'}>
                         Benvenuto su EpiBooks, perditi tra le pagine dei nostri <span className="fw-bold">{booksData.length}</span> libri!
                     </Alert>

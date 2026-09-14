@@ -3,8 +3,11 @@ import { Eraser, Star } from "lucide-react";
 import './singleComment.css';
 import { useContext } from "react";
 import { CommentsContext } from "../../contexts/CommentsContext";
+import {ThemeContext} from "../../contexts/ThemeContext";
 
 const SingleComment = ({comment, asin, rate, author, id}) => {
+const {isDark} = useContext(ThemeContext)
+
 const {getComments,comments} = useContext(CommentsContext)
 
     const deleteComment = async () => {
@@ -31,7 +34,7 @@ console.log(asin)
                 <div>
                     <p className="mb-1">{author}</p>
                     <span className="text-warning font-monospace text-wrapper">({rate}/5<Star className='star-icon' />)</span>
-                    <p className="mb-0 text-muted ">{comment}</p>
+                    <p className="mb-0 ">{comment}</p>
                 </div>
                 <Button
                 className="text-erase mx-2 align-self-end"

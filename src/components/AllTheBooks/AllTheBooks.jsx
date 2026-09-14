@@ -13,12 +13,7 @@ const AllTheBooks = () => {
     const [isSelected, setIsSelected] = useState(null)
 
     const showComments = (book) => {
-        if (isSelected) {
-            setIsSelected(null)
-        } else {
-            setIsSelected(book.asin)
-        }
-
+        setIsSelected((prevBook) => (prevBook === book.asin ? null : book.asin))
     }
     const [limit, setLimit] = useState(12)
 
@@ -29,7 +24,7 @@ const AllTheBooks = () => {
     return (
         <div
             className={isDark ? 'bg-dark' : 'bg-white'}>
-            <Container>
+            <Container className='py-5'>
                 {/*Row Griglia Libri*/}
                 <Row>
                     <Col xl={6}>
@@ -46,13 +41,13 @@ const AllTheBooks = () => {
                                 >
                                     <SingleBook book={book}
                                         showComments={showComments}
-                                        asinIsSelected={isSelected} 
-                                        />
+                                        asinIsSelected={isSelected}
+                                    />
                                 </Col>
                             )}
                         </Row>
-                        <Row>
-                            <Col className='text-center g-4'>
+                        <Row >
+                            <Col className='text-center'>
                                 {limit < booksData.length && (
                                     <Button
                                         type='button'
@@ -65,9 +60,9 @@ const AllTheBooks = () => {
                             </Col>
                         </Row>
                     </Col>
-                    <Col xl={6}>
+                    <Col xl={6} >
                         <Row>
-                            <Col>
+                            <Col className='sticky-top'>
                                 {isSelected ? <CommentArea
                                     asinIsSelected={isSelected}
                                 /> : <Alert>Seleziona un libro per leggere i commenti</Alert>}

@@ -11,7 +11,8 @@ const CommentList = ({ show, onHide, asin }) => {
     const {isDark} = useContext(ThemeContext)
     const {comments} = useContext(CommentsContext)
     return (
-       <div>
+       <div
+       className={isDark? 'text-white':''}>
         {comments.length === 0 ? (
                         <p className="text-center text-muted">Non ci sono recensioni, aggiungi la tua: </p>
                     ) : (
