@@ -1,20 +1,19 @@
-
-.star-icon{
- width: 1em;
- height: 1em;
- padding-bottom: 3px;
+.comment-box {
+  font-size: 0.9rem;
+  transition: backgrund-color 0.15s ease-in-out;
+  padding: 10px;
 }
-
-.text-wrapper{
-    font-size: 15px;
+.comment-box:hover {
+  background-color: rgba(0, 0, 0, 0.03);
 }
-.erase-icon{
-    margin-left: 3px;
-    padding-bottom: 2px;
-    width: 1.2em;
-    height: 1.2em;
-    
+.star-icon {
+  width: 1em;
+  height: 1em;
+  padding-bottom: 3px;
 }
-.text-erase{
-    font-size: 14px;
+.erase-icon {
+  margin-left: 3px;
+  padding-bottom: 2px;
+  width: 1.2em;
+  height: 1.2em;
 }

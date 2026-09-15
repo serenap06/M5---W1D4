@@ -1,7 +1,7 @@
-import MyNav from "./../../components/myNav/MyNav"
+import MyNav from "./../../components/myNav/MyNav";
 import Welcome from "./../../components/welcome/Welcome";
-import AllTheBooks from "./../../components/AllTheBooks/AllTheBooks";
-import MyFooter from "./../../components/myFooter/MyFooter"
+import AllTheBooks from "./../../components/allTheBooks/AllTheBooks";
+import MyFooter from "./../../components/myFooter/MyFooter";
 
 const HomePage = () => {
   return (
@@ -11,6 +11,6 @@ const HomePage = () => {
       <AllTheBooks />
       <MyFooter />
     </>
-  )
-}
+  );
+};
 export default HomePage;

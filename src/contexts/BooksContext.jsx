@@ -1,44 +1,47 @@
 import { createContext, useEffect, useState } from "react";
 
-
-export const BooksContext = createContext()
+export const BooksContext = createContext();
 
 export const BooksProvider = ({ children }) => {
-    const [booksData, setBooksData] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState('')
+  const [booksData, setBooksData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-
-    const getBooks=async()=>{
-        setIsLoading(true)
-        try {
-            const response = await fetch('https://epibooks.onrender.com')
-            const data = await response.json()
-            setBooksData(data)
-        } catch (error) {
-            console.log(error)
-            setError('Errore nel caricamento dei libri')
-        } finally{
-            setIsLoading(false)
-        }
+  const getBooks = async () => {
+    setIsLoading(true);
+    setError("");
+    try {
+      const response = await fetch("https://epibooks.onrender.com");
+      if(!response.ok){
+        throw new Error("Impossibile caricare l'elenco dei libri")
+      }
+      const data = await response.json();
+      setBooksData(data);
+    } catch (error) {
+      console.log(error);
+      setError("Errore nel caricamento dei libri");
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    useEffect(()=>{
-        getBooks()
-    },[])
+  useEffect(() => {
+    getBooks();
+  }, []);
 
-    return(
-        <BooksContext.Provider
-        value={{
-            booksData,
-            setBooksData,
-            isLoading,
-            setIsLoading,
-            error,
-            setError,
-            getBooks,
-        }}>
-            {children}
-        </BooksContext.Provider>
-    )
-}
+  return (
+    <BooksContext.Provider
+      value={{
+        booksData,
+        setBooksData,
+        isLoading,
+        setIsLoading,
+        error,
+        setError,
+        getBooks,
+      }}
+    >
+      {children}
+    </BooksContext.Provider>
+  );
+};

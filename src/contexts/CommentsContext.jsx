@@ -1,33 +1,51 @@
 import { createContext, useState } from "react";
 
-export const CommentsContext = createContext()
+export const CommentsContext = createContext();
 
-export const CommentsProvider = ({children})=>{
-const [comments, setComments] = useState([])
+export const CommentsProvider = ({ children }) => {
+  const [comments, setComments] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-const getComments = async (asin) => {
-        const apiUrl = `https://striveschool-api.herokuapp.com/api/books/${asin}/comments/`
-        const apiToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTYyNGU5OTIxMDU5ZjAwMTVlMjNhMGEiLCJpYXQiOjE3ODc4NjQ4NzYsImV4cCI6MTc4OTA3NDQ3Nn0.WEUhGu9DJdR0VKRF1JA8tvApR-XiF4ix-aRy_lDuoAc`
-        try {
-            const response = await fetch(apiUrl, {
-                headers: {
-                    Authorization: `Bearer ${apiToken}`
-                }
-            })
-            const data = await response.json()
-            setComments(data)
-        } catch (error) {
-            console.log(error)
-        }
+  const getComments = async (asin) => {
+    if (!asin) {
+      setComments([]);
+      return;
     }
-return(
+    setIsLoading(true);
+    setError("");
+
+    const apiUrl = `https://striveschool-api.herokuapp.com/api/books/${asin}/comments/`;
+    const apiToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTYyNGU5OTIxMDU5ZjAwMTVlMjNhMGEiLCJpYXQiOjE3ODkzODI3ODgsImV4cCI6MTc5MDU5MjM4OH0.BAt548E0r4cJx-N2O7bpWpEx2p2Xsp_NXV8xgi6xZYI`;
+
+    try {
+      const response = await fetch(apiUrl, {
+        headers: {
+          Authorization: `Bearer ${apiToken}`,
+        },
+      });
+      
+      const data = await response.json();
+      setComments(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.log(error);
+      setError("Impossibile caricare i commenti");
+      setComments([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  return (
     <CommentsContext.Provider
-    value={{
-        comments, 
+      value={{
+        comments,
         setComments,
-        getComments
-    }}>
-        {children}
+        getComments,
+        isLoading,
+        error,
+      }}
+    >
+      {children}
     </CommentsContext.Provider>
-)
-}
+  );
+};
